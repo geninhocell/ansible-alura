@@ -2,7 +2,7 @@
 - hosts: all
   gather_facts: yes
   tasks:
-  - name: 'Criar arquivo vazio'
+  - name: Create empty file
     file:
-      path: '/tmp/teste1'
+      path: "/tmp/test_1"
       state: touch

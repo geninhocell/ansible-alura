@@ -1,0 +1,12 @@
+# Example inventory that makes an alias for localhost that uses Python3
+localhost-py3 ansible_host=localhost ansible_connection=local
+ansible_python_interpreter=/usr/bin/python3
+
+[ansibleserver]
+192.168.33.100
+
+[ubuntu1]
+192.168.33.101
+
+[awx]
+192.168.33.100
