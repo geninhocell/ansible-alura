@@ -1,0 +1,7 @@
+---
+
+- hosts: awx
+  become: yes
+  user: vagrant
+  roles:
+  - { role: install-wp, tags: ["install_wp"]}

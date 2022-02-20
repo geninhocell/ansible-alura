@@ -1,2 +1,3 @@
 ---
 # vars file for install-db
+mysql_root_password: password
