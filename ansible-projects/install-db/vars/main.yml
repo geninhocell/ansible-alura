@@ -1,3 +1,7 @@
 ---
 # vars file for install-db
-mysql_root_password: password
+dbpass: "123456"
+dbhost: "192.168.33.101"
+dbport: "3306"
+dbuser: "root"
+dbname: "wp_db_prd"

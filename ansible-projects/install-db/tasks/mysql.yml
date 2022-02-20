@@ -1,24 +1,26 @@
 - name: install mysql
-  apt: name=mysql
-  update_cache: yes
-  cache_valid_time: 3600
-  state: present
+  apt:
+    name: mysql
+    update_cache: yes
+    cache_valid_time: 3600
+    state: present
 
 - name: inicie o serviço mysql
   shell: "service mysql start"
 
 - name: certifique-se de que o mysql está habilitado para ser executado na inicialização
-  service: name=mysql
-  state: started
-  enabled: true
+  service:
+    name: mysql
+    state: started
+    enabled: true
 
 - name: update mysql root password for all root accounts
   mysql_user:
-    name: root
-    host: "{{ item }}"
-    password: "{{ mysql_root_password }}"
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
+    name: "{{ dbuser }}"
+    host: "{{ dbhost }}"
+    password: "{{ dbpass }}"
+    login_user: "{{ dbuser }}"
+    login_password: "{{ dbpass }}"
     check_implicit_admin: yes
     priv: "*.*:ALL,GRANT"
   with_items:
@@ -29,10 +31,10 @@
 
 - name: create a new database
   mysql_db:
-    name: testdb
+    name: "{{ dbname }}"
     state: present
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
+    login_user: "{{ dbuser }}"
+    login_password: "{{ dbpass }}"
 
 - name: add sample data to database
   copy:
@@ -40,8 +42,9 @@
     dest: /tmp/dump.sql
 
 - name: insert sample data into database
-  mysql_db: name=testdb
-  state: import
-  target: /tmp/dump.sql
-  login_user: root
-  login_password: "{{ mysql_root_password }}"
+  mysql_db:
+    name: "{{ dbname }}"
+    state: import
+    target: /tmp/dump.sql
+    login_user: "{{ dbuser }}"
+    login_password: "{{ dbpass }}"
